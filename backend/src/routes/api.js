@@ -9,7 +9,7 @@ const vendorController = require("../controllers/vendorController");
 const transactionController = require("../controllers/transactionController");
 const authController = require("../controllers/authController");
 const usersController = require("../controllers/usersController");   // ✔ correct import
-const itemsController = require("../controllers/TransactionitemsController");  // ✔ FIXED missing import
+const itemsController = require("../controllers/transactionitemsController");  // ✔ FIXED missing import
 
 // ===============================
 // MIDDLEWARE
