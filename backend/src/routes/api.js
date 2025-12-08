@@ -44,10 +44,10 @@ router.post("/auth/login", authController.login);
 // ===============================
 // COMPANY ROUTES
 // ===============================
-router.post("/companies", companyController.create);
-router.get("/companies", authMiddleware, companyController.list);
-router.get("/companies/:id", companyController.getById);
-router.put("/companies/:id", companyController.update);
+router.post("/companies", companycontroller.create);
+router.get("/companies", authMiddleware, companycontroller.list);
+router.get("/companies/:id", companycontroller.getById);
+router.put("/companies/:id", companycontroller.update);
 
 
 // ===============================
