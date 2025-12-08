@@ -1,0 +1,130 @@
+body {
+  font-family: Arial, sans-serif;
+  background: #f4f6f9;
+  padding: 30px;
+}
+
+.title {
+  margin-bottom: 15px;
+  font-size: auto;
+  font-weight: 500;
+}
+
+.clear-all {
+  padding: 8px 14px;
+  background: #ff5252;
+  border: none;
+  color: white;
+  border-radius: 6px;
+  margin-bottom: 15px;
+  cursor: pointer;
+}
+
+.clear-all:hover {
+  background: #ff3030;
+}
+
+.table-container {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 12px;
+  border-bottom: 1px solid #ddd;
+}
+
+th.filter {
+  cursor: pointer;
+  background: #eef1f5;
+  position: relative;
+}
+
+th.filter:hover {
+  background: #e2e6ed;
+}
+
+.filter-box {
+  position: absolute;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 2px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+  z-index: 999;
+  width: auto;           /* BOX size controlled by JS */
+  min-width: 120px;
+  box-sizing: border-box;
+}
+
+
+.hidden {
+  display: none;
+}
+
+#filterSearch {
+  width: 100%;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  margin-bottom: 8px;
+}
+
+#filterList {
+  list-style: none;
+  padding: 0;
+  max-height: 180px;
+  overflow-y: auto;
+  margin: 0;
+}
+
+#filterList li {
+  padding: 6px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+#filterList li:hover {
+  background: #efefef;
+}
+
+
+
+#filterSearch {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.sort-btn:hover {
+  background: #135fc4;
+}
+
+.sort-btn, .clear-column {
+  width: 100%;              /* box ke andar full width */
+  padding: 4px 6px;         /* minimal padding */
+  background: #1a73e8;
+  border: none;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 13px;          /* compact readable text */
+  line-height: 1.2;         /* avoid tall buttons */
+  box-sizing: border-box;   /* border + padding adjust */
+  margin: 4px 0;
+}
+
+.clear-column {
+  background: #777;         /* gray */
+}
+
+.filter-box * {
+  width: 100%;
+  box-sizing: border-box;
+}

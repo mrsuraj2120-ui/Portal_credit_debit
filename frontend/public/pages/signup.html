@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Signup - Credit/Debit Portal</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="../loader/loader.css">
+  <link rel="stylesheet" href="../notifier/notifier.css">
+</head>
+
+<body class="min-h-screen bg-gray-100 text-gray-800 flex items-center justify-center">
+
+   <!-- GLOBAL LOADER -->
+<div id="showLoader" class="page-loader" style="display:none;">
+  <div class="loader-box">
+    <div class="ring"></div>
+    <div class="center-orb"></div>
+    <h2 class="loader-text">Please wait...</h2>
+    <p class="loader-sub">Processing...</p>
+  </div>
+</div>
+
+<!-- GLOBAL TOAST NOTIFIER -->
+<div id="freshToastContainer" class="fresh-toast-container"></div>
+
+  <!-- Signup Card -->
+  <div class="bg-white shadow-lg rounded-xl p-8 w-full max-w-xl border border-gray-200">
+
+    <h1 class="text-2xl font-bold text-gray-800 text-center mb-2">Create Account ✨</h1>
+    <p class="text-sm text-gray-500 text-center mb-6">Fill your details to get started</p>
+
+    
+    <!-- STEP 1: USER DETAILS -->
+    <div id="step1">
+      <h2 class="text-lg font-semibold mb-4">User Details</h2>
+
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <label class="text-sm font-medium">First Name</label>
+          <input id="firstName" class="w-full border rounded-lg p-2 mt-1" type="text" placeholder="John">
+        </div>
+
+        <div>
+          <label class="text-sm font-medium">Last Name</label>
+          <input id="lastName" class="w-full border rounded-lg p-2 mt-1" type="text" placeholder="Doe">
+        </div>
+      </div>
+
+      <div class="mt-4">
+        <label class="text-sm font-medium">Email</label>
+        <input id="email" class="w-full border rounded-lg p-2 mt-1" type="email" placeholder="you@example.com">
+      </div>
+
+      <div class="mt-4 grid grid-cols-2 gap-4">
+        <div>
+          <label class="text-sm font-medium">Password</label>
+          <input id="password" class="w-full border rounded-lg p-2 mt-1" type="password">
+        </div>
+
+        <div>
+          <label class="text-sm font-medium">Retype Password</label>
+          <input id="rePassword" class="w-full border rounded-lg p-2 mt-1" type="password">
+        </div>
+      </div>
+
+      <div class="mt-4">
+        <label class="text-sm font-medium">Role</label>
+        <select id="role" class="w-full border rounded-lg p-2 mt-1">
+          <option value="">Select Role</option>
+          <option value="admin">Admin</option>
+          <option value="manager">Manager</option>
+          <option value="viewer">Viewer</option>
+        </select>
+      </div>
+
+      <button onclick="step1Next()"
+        class="w-full bg-blue-600 text-white mt-6 py-2 rounded-lg font-semibold hover:bg-blue-700 transition">
+        Continue →
+      </button>
+
+      <p class="text-center text-sm mt-3 text-gray-600">
+        Already have an account?
+        <a href="login.html" class="text-blue-600 font-semibold hover:text-blue-700">Login</a>
+      </p>
+    </div>
+
+
+
+    <!-- STEP 2: COMPANY DETAILS -->
+    <div id="step2" class="hidden">
+      <h2 class="text-lg font-semibold mb-4">Company Details</h2>
+
+      <div>
+        <label class="text-sm font-medium">Company Name</label>
+        <input id="companyName" class="w-full border rounded-lg p-2 mt-1" type="text" placeholder="ABC Pvt Ltd">
+      </div>
+
+      <div class="mt-4">
+        <label class="text-sm font-medium">GSTIN (Optional)</label>
+        <input id="gstin" class="w-full border rounded-lg p-2 mt-1" type="text">
+      </div>
+
+      <div class="mt-4">
+        <label class="text-sm font-medium">Address</label>
+        <textarea id="address" class="w-full border rounded-lg p-2 mt-1" placeholder="Company Address"></textarea>
+      </div>
+
+      <div class="mt-4">
+        <label class="text-sm font-medium">Company Email</label>
+        <input id="companyEmail" class="w-full border rounded-lg p-2 mt-1" type="email">
+      </div>
+
+      <div class="mt-4">
+        <label class="text-sm font-medium">Phone</label>
+        <input id="companyPhone" class="w-full border rounded-lg p-2 mt-1" type="text">
+      </div>
+
+      <button onclick="completeSignup()"
+        class="w-full bg-green-600 text-white mt-6 py-2 rounded-lg font-semibold hover:bg-green-700 transition">
+        Create Account
+      </button>
+
+      <button onclick="backToStep1()"
+        class="w-full bg-gray-300 text-gray-800 mt-2 py-2 rounded-lg font-semibold hover:bg-gray-400 transition">
+        ← Back
+      </button>
+    </div>
+
+  </div>
+
+ 
+
+
+
+
+  <!-- SCRIPT -->
+  <script src="../loader/loader.js"></script>
+  <script src="../notifier/notifier.js"></script>
+  <script src="../js/signup.js"></script>
+
+</body>
+</html>

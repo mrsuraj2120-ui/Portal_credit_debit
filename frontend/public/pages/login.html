@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login - Credit/Debit Portal</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="../loader/loader.css">
+  <link rel="stylesheet" href="../notifier/notifier.css">
+  
+</head>
+
+<body class="min-h-screen bg-gray-100 text-gray-800 flex items-center justify-center">
+
+  <!-- GLOBAL LOADER -->
+<div id="pageLoader" class="page-loader" style="display:none;">
+  <div class="loader-box">
+    <div class="ring"></div>
+    <div class="center-orb"></div>
+    <h2 class="loader-text">Please wait...</h2>
+    <p class="loader-sub">Processing...</p>
+  </div>
+</div>
+
+<!-- GLOBAL TOAST NOTIFIER -->
+<div id="freshToastContainer" class="fresh-toast-container"></div>
+
+  <!-- Login Card -->
+  <div class="bg-white shadow-lg rounded-xl p-8 w-full max-w-md border border-gray-200">
+    <div class="text-center mb-6">
+      <h1 class="text-2xl font-bold text-gray-800">Welcome Back 👋</h1>
+      <p class="text-sm text-gray-500">Sign in to continue</p>
+    </div>
+
+    <div class="space-y-4">
+      <div>
+        <label for="email" class="block text-sm font-medium text-gray-700">Email Address</label>
+        <input id="email" type="email" placeholder="you@example.com"
+          class="mt-1 w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-blue-500 focus:outline-none">
+      </div>
+
+      <div>
+        <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+        <input id="password" type="password" placeholder="••••••••"
+          class="mt-1 w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-blue-500 focus:outline-none">
+      </div>
+
+      <div class="flex items-center justify-between text-sm mt-2">
+        <a href="forgot.html" class="text-blue-600 hover:text-blue-700 font-medium">Forgot Password?</a>
+      </div>
+
+      <button onclick="login()"
+        class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded-lg shadow transition">
+        Login
+      </button>
+
+      <p class="text-center text-sm mt-3 text-gray-600">
+        Don't have an account?
+        <a href="signup.html" class="text-blue-600 hover:text-blue-700 font-semibold">Sign Up</a>
+      </p>
+    </div>
+  </div>
+
+  
+
+
+  <!-- JS -->
+   <script src="../loader/loader.js"></script>
+   <script src="../notifier/notifier.js"></script>
+   <script src="../js/login.js"></script>
+
+
+</body>
+</html>

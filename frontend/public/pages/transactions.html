@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Transactions - Credit/Debit Portal</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="../loader/loader.css">
+  <link rel="stylesheet" href="../notifier/notifier.css">
+  <link rel="stylesheet" href="../filter/filter.css">
+  <link rel="stylesheet" href="../navbar/navbar.css">
+</head>
+
+<body class="bg-gray-100 text-gray-800">
+
+  <div class="flex">
+
+    <!-- Navbar container (will be filled by JS) -->
+  <div id="navbar-container" 
+     class="fixed top-0 left-0 h-screen w-[260px] z-50 bg-[#0f1c2f]">
+</div>
+    
+
+  <!-- MAIN CONTENT -->
+  <main class="flex-1 ml-[260px] p-8 overflow-y-auto">
+
+      <!-- FILTER BOX -->
+      <div id="filterBox" class="filter-box hidden">
+        <button id="clearColumn" class="clear-column">Clear Filter</button>
+        <button id="sortAsc" class="sort-btn">Sort Ascending</button>
+        <button id="sortDesc" class="sort-btn">Sort Descending</button>
+        <input type="text" id="filterSearch" placeholder="Search...">
+        <ul id="filterList"></ul>
+      </div>
+
+      <!-- GLOBAL LOADER -->
+      <div id="pageLoader" class="page-loader">
+        <div class="loader-box">
+          <div class="ring"></div>
+          <div class="center-orb"></div>
+          <h2 class="loader-text">Please wait...</h2>
+          <p class="loader-sub">Fetching your data</p>
+        </div>
+      </div> 
+
+      <!-- NOTIFIER -->
+      <div id="freshToastContainer" class="fresh-toast-container"></div>
+
+    <!-- Main Content -->
+      <div class="flex justify-between items-center mb-6">
+        <h1 class="text-2xl font-bold">Transactions</h1>
+        <input type="text" placeholder="Search..." class="border p-2 rounded w-60 shadow-sm">
+      </div>
+
+      <!-- Create Transaction -->
+      <div class="bg-white p-6 rounded-xl shadow mb-8">
+        <h2 class="text-lg font-semibold mb-4">Create Debit / Credit note</h2>
+
+        <!-- Selects -->
+        <div class="grid grid-cols-4 gap-4 mb-4">
+          <select id="type" class="border p-2 rounded">
+            <option>Debit</option>
+            <option>Credit</option>
+          </select>
+          <input id="tdate" type="date" class="border p-2 rounded" />
+
+          <!-- Vendor Dropdown -->
+          <select id="tvendor" class="border p-2 rounded" onchange="onVendorSelect()" disabled>
+
+            <option value="">--Select--</option>
+          </select>
+        </div>
+
+        <div id="newVendorForm" class="hidden bg-gray-50 p-4 rounded-lg mb-4 border border-gray-200">
+          <h4 class="font-semibold mb-2 text-blue-700">➕ Add New Vendor</h4>
+          <div class="grid grid-cols-3 gap-3 mb-3">
+            <input type="text"id="newVendorName" placeholder="Vendor Name" class="border p-2 rounded col-span-2" />
+            <input type="text"id="newVendorGST" placeholder="GSTIN" class="border p-2 rounded" />
+            <input type="email"id="newVendorEmail" placeholder="Email" class="border p-2 rounded" />
+            <input type="text"id="newVendorContact" placeholder="Contact person" class="border p-2 rounded" />
+            <input type="number"id="newVendorPhone" placeholder="Phone" class="border p-2 rounded" />
+            <input type="text"id="newVendorAddress" placeholder="Address" class="border p-2 rounded col-span-3" />
+          </div>
+          <button id="addVendorBtn" class="bg-green-600 text-white px-3 py-1 rounded" onclick="addNewVendor()">Add</button>
+        </div>
+
+        <!-- Items -->
+        <div class="bg-gray-50 p-4 rounded-lg mb-4">
+          <h4 class="font-semibold mb-2">Items</h4>
+          <div id="itemsContainer" class="mb-2 pointer-events-none opacity-60"></div>
+          <div class="flex items-center gap-2">
+            <button id="addItemBtn" class="bg-blue-600 text-white px-3 py-1 rounded mt-2" onclick="addItemRow()" disabled>+ Add Item</button>
+            <button id="removeItemBtn" class="bg-red-500 text-white px-3 py-1 rounded mt-2" onclick="removeLastItem()" disabled>- Remove Item</button>
+          </div>
+        </div>
+
+        <div class="flex gap-2">
+          <button id="submitBtn" class="bg-green-600 text-white px-4 py-2 rounded" onclick="submitTransaction('Created')">Submit</button>
+          <button id="draftBtn" class="bg-yellow-500 text-white px-4 py-2 rounded" onclick="submitTransaction('Draft')">Save as Draft</button>
+        </div>
+      </div>
+
+      <!-- Existing Transactions -->
+      <div class="bg-white p-6 rounded-xl shadow-lg">
+        <h2 class="text-lg font-semibold mb-4 text-gray-800">Created debit / credit notes</h2>
+        <div class="overflow-x-auto rounded-lg border border-gray-200">
+          <table class="min-w-full text-sm text-left border-collapse">
+            <thead class="bg-gray-50 border-b border-gray-200">
+              <tr>
+                <th class="px-4 py-2 font-semibold text-gray-700 filter" data-col="0">Debit/Credit Note no.</th>
+                <th class="px-4 py-2 font-semibold text-gray-700 filter" data-col="1">Type</th>
+                <th class="px-4 py-2 font-semibold text-gray-700 filter" data-col="2">Status</th>
+                <th class="px-4 py-2 font-semibold text-gray-700 filter" data-col="3">Date</th>
+                <th class="px-4 py-2 font-semibold text-gray-700 filter" data-col="4">Vender</th>
+                <th class="px-4 py-2 font-semibold text-gray-700 filter" data-col="5">Tax %</th>
+                <th class="px-4 py-2 font-semibold text-gray-700 text-right filter" data-col="6">Total (with tax included)</th>
+                <th class="px-4 py-2 font-semibold text-gray-700 text-center filter" data-col="7">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="transTable" class="divide-y divide-gray-100 bg-white"></tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Edit Modal (hidden until needed) -->
+  <div id="editModal" class="fixed inset-0 bg-black bg-opacity-40 hidden">
+  <div class="absolute top-1/2 left-[calc(260px+43%)] -translate-x-1/2 -translate-y-1/2
+              bg-white w-11/12 md:w-3/4 p-6 rounded-lg shadow-lg max-h-[90vh] overflow-auto">
+      
+      <h3 class="text-lg font-semibold mb-4">Edit Transaction <span id="editTxnId"></span></h3>
+
+      <div class="grid grid-cols-4 gap-3 mb-3">
+        <select id="editType" class="border p-2 rounded col-span-1">
+          <option>Debit</option>
+          <option>Credit</option>
+        </select>
+        <input id="editDate" type="date" class="border p-2 rounded col-span-1" />
+        <select id="editVendor" class="border p-2 rounded col-span-1"></select>
+      </div>
+
+      <div id="editItemsContainer" class="mb-4"></div>
+
+      <div class="flex gap-2 mb-4">
+        <button class="bg-blue-600 text-white px-3 py-1 rounded" onclick="editAddItem()">+ Add Item</button>
+        <button class="bg-red-500 text-white px-3 py-1 rounded" onclick="editRemoveLast()">- Remove Item</button>
+      </div>
+
+      <div class="flex gap-2">
+        <button class="bg-green-600 text-white px-4 py-2 rounded" onclick="saveEdit('Created')">Submit</button>
+        <button class="bg-yellow-500 text-white px-4 py-2 rounded" onclick="saveEdit('Draft')">Save as Draft</button>
+        <button class="bg-gray-300 px-4 py-2 rounded" onclick="closeEdit()">Close</button>
+      </div>
+
+  </div>
+</div>
+
+
+  <!-- ==================== SCRIPTS ==================== -->
+   <script>
+  // fetch navbar HTML and insert into #navbar-container
+  (async function loadNavbar() {
+    try {
+      const res = await fetch('/navbar/navbar.html');
+      if (!res.ok) {
+        console.warn('Navbar load failed:', res.status);
+        return;
+      }
+
+      const html = await res.text();
+      document.getElementById('navbar-container').innerHTML = html;
+
+      // now load navbar behavior script
+      const s = document.createElement('script');
+      s.src = '/navbar/navbar.js';
+      document.body.appendChild(s);
+
+    } catch (e) {
+      console.error('Navbar fetch error', e);
+    }
+  })();
+</script>
+<script src="../navbar/navbar.js"></script>
+<script src="../loader/loader.js"></script>
+<script src="../notifier/notifier.js"></script>
+<script src="../filter/filter.js"></script>
+<script src="../js/transactions.js"></script>
+</body>
+</html>

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Users - Credit/Debit Portal</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <link rel="stylesheet" href="../loader/loader.css">
+  <link rel="stylesheet" href="../notifier/notifier.css">
+  <link rel="stylesheet" href="../filter/filter.css">
+  <link rel="stylesheet" href="../navbar/navbar.css">
+</head>
+
+<body class="bg-gray-100 text-gray-800">
+
+<div class="flex">
+
+  <!-- Navbar -->
+  <div id="navbar-container"
+       class="fixed top-0 left-0 h-screen w-[260px] z-50 bg-[#0f1c2f]">
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <main class="flex-1 ml-[260px] p-8 overflow-y-auto">
+
+    <!-- FILTER BOX -->
+    <div id="filterBox" class="filter-box hidden">
+      <button id="clearColumn" class="clear-column">Clear Filter</button>
+      <button id="sortAsc" class="sort-btn">Sort Ascending</button>
+      <button id="sortDesc" class="sort-btn">Sort Descending</button>
+      <input type="text" id="userSearch" placeholder="Search User...">
+      <ul id="filterList"></ul>
+    </div>
+
+    <!-- LOADER -->
+    <div id="pageLoader" class="page-loader">
+      <div class="loader-box">
+        <div class="ring"></div>
+        <div class="center-orb"></div>
+        <h2 class="loader-text">Please wait...</h2>
+        <p class="loader-sub">Fetching your data</p>
+      </div>
+    </div>
+
+    <!-- NOTIFIER -->
+    <div id="freshToastContainer" class="fresh-toast-container"></div>
+
+    <h1 class="text-2xl font-bold mb-6">User Management</h1>
+
+    <!-- ADD USER FORM -->
+    <div class="card mb-8 p-6">
+      <h2 class="text-xl font-semibold mb-4">Add New User</h2>
+
+      <div class="grid grid-cols-2 gap-4">
+
+        <div>
+          <label class="text-sm font-medium">Full Name</label>
+          <input type="text" id="full_name" class="mt-1 w-full border rounded-lg p-2" placeholder="Full Name">
+        </div>
+
+        <div>
+          <label class="text-sm font-medium">Email</label>
+          <input type="email" id="email" class="mt-1 w-full border rounded-lg p-2" placeholder="Email">
+        </div>
+
+        <div>
+          <label class="text-sm font-medium">Phone</label>
+          <input type="number" id="phone" class="mt-1 w-full border rounded-lg p-2" placeholder="Phone">
+        </div>
+
+        <div>
+          <label class="text-sm font-medium">Role</label>
+          <select id="role" class="mt-1 w-full border rounded-lg p-2">
+            <option value="">Select Role</option>
+            <option value="Admin">Admin</option>
+            <option value="Manager">Manager</option>
+            <option value="User">User</option>
+          </select>
+        </div>
+
+        <div class="col-span-2">
+          <label class="text-sm font-medium">Password</label>
+          <input type="password" id="password" class="mt-1 w-full border rounded-lg p-2" placeholder="Password">
+        </div>
+
+      </div>
+
+      <button id="btnAddUser"
+        class="mt-4 bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg shadow">
+        Add User
+      </button>
+
+      <button id="btnCancelUser"
+        class="mt-4 ml-3 bg-gray-500 hover:bg-gray-600 text-white py-2 px-4 rounded-lg shadow opacity-50 cursor-not-allowed"
+        disabled>
+        Cancel
+      </button>
+
+    </div>
+
+    <!-- USERS TABLE -->
+    <div class="card p-6">
+      <h2 class="text-xl font-semibold mb-4">All Users</h2>
+
+      <table class="w-full border-collapse">
+        <thead>
+          <tr class="bg-gray-100 text-left">
+            <th class="p-2 filter" data-col="0">User ID</th>
+            <th class="p-2 filter" data-col="1">Name</th>
+            <th class="p-2 filter" data-col="2">Email</th>
+            <th class="p-2 filter" data-col="3">Phone</th>
+            <th class="p-2 filter" data-col="4">Role</th>
+            <th class="p-2">Action</th>
+          </tr>
+        </thead>
+        <tbody id="usersbody"></tbody>
+      </table>
+
+    </div>
+
+  </main>
+</div>
+
+<!-- NAVBAR LOADER -->
+<script>
+  (async function loadNavbar() {
+    try {
+      const res = await fetch('/navbar/navbar.html');
+      if (!res.ok) return console.warn('Navbar load failed:', res.status);
+
+      const html = await res.text();
+      document.getElementById('navbar-container').innerHTML = html;
+
+      const s = document.createElement('script');
+      s.src = '/navbar/navbar.js';
+      document.body.appendChild(s);
+
+    } catch (e) {
+      console.error('Navbar fetch error', e);
+    }
+  })();
+</script>
+
+<script src="../loader/loader.js"></script>
+<script src="../notifier/notifier.js"></script>
+<script src="../filter/filter.js"></script>
+<script src="../navbar/navbar.js"></script>
+<script src="../js/users.js"></script>
+
+</body>
+</html>
