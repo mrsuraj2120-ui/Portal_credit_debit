@@ -4,12 +4,12 @@ const router = express.Router();
 // ===============================
 // CONTROLLERS
 // ===============================
-const companyController = require("../controllers/companyController");
-const vendorController = require("../controllers/vendorController");
-const transactionController = require("../controllers/transactionController");
-const authController = require("../controllers/authController");
-const usersController = require("../controllers/usersController");   // ✔ correct import
-const itemsController = require("../controllers/transactionitemsController");  // ✔ FIXED missing import
+const companyController = require("../controllers/companycontroller");
+const vendorController = require("../controllers/vendorcontroller");
+const transactionController = require("../controllers/transactioncontroller");
+const authController = require("../controllers/authcontroller");
+const usersController = require("../controllers/userscontroller");   // ✔ correct import
+const itemsController = require("../controllers/transactionitemscontroller");  // ✔ FIXED missing import
 
 // ===============================
 // MIDDLEWARE
