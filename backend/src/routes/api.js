@@ -53,11 +53,11 @@ router.put("/companies/:id", companyController.update);
 // ===============================
 // VENDOR ROUTES
 // ===============================
-router.post("/vendors/:companyId", vendorController.create);
-router.get("/vendors/:companyId", vendorController.listByCompany);
-router.get("/vendor/by-id/:id", vendorController.getById);
-router.put("/vendor/by-id/:id", vendorController.update);
-router.delete("/vendor/by-id/:id", vendorController.delete);
+router.post("/vendors/:companyId", vendorcontroller.create);
+router.get("/vendors/:companyId", vendorcontroller.listByCompany);
+router.get("/vendor/by-id/:id", vendorcontroller.getById);
+router.put("/vendor/by-id/:id", vendorcontroller.update);
+router.delete("/vendor/by-id/:id", vendorcontroller.delete);
 
 
 
