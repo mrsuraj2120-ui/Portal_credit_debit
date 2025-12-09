@@ -4,7 +4,7 @@ const router = express.Router();
 // ===============================
 // CONTROLLERS
 // ===============================
-const companyController = require("../controllers/companycontroller");
+const companyController = require("../controllers/companyController");
 const vendorController = require("../controllers/vendorcontroller");
 const transactionController = require("../controllers/transactioncontroller");
 const authController = require("../controllers/authcontroller");
@@ -44,10 +44,10 @@ router.post("/auth/login", authController.login);
 // ===============================
 // COMPANY ROUTES
 // ===============================
-router.post("/companies", companycontroller.create);
-router.get("/companies", authMiddleware, companycontroller.list);
-router.get("/companies/:id", companycontroller.getById);
-router.put("/companies/:id", companycontroller.update);
+router.post("/companies", companyController.create);
+router.get("/companies", authMiddleware, companyController.list);
+router.get("/companies/:id", companyController.getById);
+router.put("/companies/:id", companyController.update);
 
 
 // ===============================
