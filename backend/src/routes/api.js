@@ -4,22 +4,20 @@ const router = express.Router();
 // ===============================
 // CONTROLLERS
 // ===============================
-const companyController = require("../controllers/companyController");
+const companyController = require("../controllers/companycontroller");
 const vendorController = require("../controllers/vendorcontroller");
 const transactionController = require("../controllers/transactioncontroller");
 const authController = require("../controllers/authcontroller");
-const usersController = require("../controllers/userscontroller");   // ✔ correct import
-const itemsController = require("../controllers/transactionitemscontroller");  // ✔ FIXED missing import
+const usersController = require("../controllers/userscontroller");
+const itemsController = require("../controllers/transactionitemscontroller");
 
 // ===============================
 // MIDDLEWARE
 // ===============================
-const authMiddleware = require("../middleware/authMiddleware"); // ✔ correct middleware
-
-
+const authMiddleware = require("../middleware/authMiddleware");
 
 // ===============================
-// USER ROUTES (Main)
+// USER ROUTES
 // ===============================
 router.get("/users", authMiddleware, usersController.getAllUsers);
 router.get("/users/:id", authMiddleware, usersController.getUserById);
@@ -27,19 +25,16 @@ router.post("/users", authMiddleware, usersController.createUser);
 router.put("/users/:id", authMiddleware, usersController.updateUser);
 router.delete("/users/:id", authMiddleware, usersController.deleteUser);
 
-
 // ===============================
 // TRANSACTION SPECIAL ROUTES
 // ===============================
 router.put("/transactions/:id/cancel", transactionController.cancel);
 router.get("/transactions/:id/pdf", transactionController.generatePDF);
 
-
 // ===============================
 // LOGIN ROUTES
 // ===============================
 router.post("/auth/login", authController.login);
-
 
 // ===============================
 // COMPANY ROUTES
@@ -49,18 +44,14 @@ router.get("/companies", authMiddleware, companyController.list);
 router.get("/companies/:id", companyController.getById);
 router.put("/companies/:id", companyController.update);
 
-
 // ===============================
 // VENDOR ROUTES
 // ===============================
-router.post("/vendors/:companyId", vendorcontroller.create);
-router.get("/vendors/:companyId", vendorcontroller.listByCompany);
-router.get("/vendor/by-id/:id", vendorcontroller.getById);
-router.put("/vendor/by-id/:id", vendorcontroller.update);
-router.delete("/vendor/by-id/:id", vendorcontroller.delete);
-
-
-
+router.post("/vendors/:companyId", vendorController.create);
+router.get("/vendors/:companyId", vendorController.listByCompany);
+router.get("/vendor/by-id/:id", vendorController.getById);
+router.put("/vendor/by-id/:id", vendorController.update);
+router.delete("/vendor/by-id/:id", vendorController.delete);
 
 // ===============================
 // TRANSACTION ROUTES
@@ -71,7 +62,6 @@ router.get("/transactions/:id", transactionController.getById);
 router.put("/transactions/:id", transactionController.update);
 router.delete("/transactions/:id", transactionController.delete);
 
-
 // ===============================
 // TRANSACTION ITEMS ROUTES
 // ===============================
@@ -79,13 +69,11 @@ router.post("/transaction-items", itemsController.create);
 router.get("/transaction-items/:transactionId", itemsController.getByTransaction);
 router.put("/transaction-items/:transactionId", itemsController.update);
 
-
 // ===============================
 // AUTH CHECK ROUTES
 // ===============================
 const db = require("../../config/db");
 
-// Check Email Exists
 router.get("/auth/check-email", async (req, res) => {
   const email = req.query.email;
   if (!email) return res.json({ exists: false });
@@ -98,7 +86,6 @@ router.get("/auth/check-email", async (req, res) => {
   res.json({ exists: rows.length > 0 });
 });
 
-// Check Company Exists
 router.get("/auth/check-company", async (req, res) => {
   const name = req.query.name;
   if (!name) return res.json({ exists: false });
